@@ -21,3 +21,14 @@ class Task extends TaskSimple {
   bool get isList => this.list;
 }
 
+// test tasks
+List<Task> tasks = [
+  Task(
+    "Do laundry",
+    "only shorts"
+  ),
+  Task(
+    "Study for test",
+    "6.1 - 6.3"
+  )
+];
