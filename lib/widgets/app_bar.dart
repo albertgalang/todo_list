@@ -6,8 +6,9 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: IconButton(
         icon: Icon(
-          Icons.arrow_back,
+          Icons.dehaze,
         ),
+        onPressed: (){},
       ),
       centerTitle: true,
       title: Text("Simple TODO App"),

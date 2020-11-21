@@ -13,7 +13,6 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: MainAppBar(),
       body: Container(
         child: ListView.separated(
-          padding: EdgeInsets.all(10.0),
           itemCount: 20,
           itemBuilder: (context, index) {
             return TaskCard(index : index); // index is just a test
@@ -37,7 +36,11 @@ class TaskCard extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: Icon(Icons.check_box_outline_blank, size: 18.0),
+            contentPadding: EdgeInsets.fromLTRB(4.0, 0.0, 4.0, 0.0),
+            leading: IconButton(
+              icon: Icon(Icons.check_box_outline_blank),
+              iconSize: 18.0,
+            ),
             title: Text(title),
           )
         ],
