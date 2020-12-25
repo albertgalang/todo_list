@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:todo_list/models/task_model.dart';
 import 'package:todo_list/widgets/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,26 +11,43 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MainAppBar(),
-      body: Container(
-        child: ListView.separated(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return TaskCard(index : index); // index is just a test
-          },
-          separatorBuilder: (context, index) => Divider(),
-        ),
-      ),
-    );
+    return FutureBuilder(
+        future: Hive.openBox('tasks'),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError)
+              return Text(snapshot.error.toString());
+            else {
+              return Scaffold(
+                appBar: MainAppBar(),
+                body: Container(
+                  child: ListView.separated(
+                    itemCount: Hive.box('tasks').length,
+                    itemBuilder: (context, index) {
+                      return TaskCard(Hive.box('tasks').values.elementAt(index)); // index is just a test
+                    },
+                    separatorBuilder: (context, index) => Divider(),
+                  ),
+                ),
+                floatingActionButton: FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    // on pressed method here
+                  },
+                ),
+              );
+            }
+          } else
+            return Scaffold();
+        });
   }
 }
 
-
 class TaskCard extends StatelessWidget {
-  final int index; // index is just a test
-  final String title = "Do laundry";
-  TaskCard({Key key, this.index}) : super(key: key);
+  // final int index; // index is just a test
+  final Task task;
+  // TaskCard({Key key, this.index}) : super(key: key);
+  TaskCard(this.task);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +60,7 @@ class TaskCard extends StatelessWidget {
               icon: Icon(Icons.check_box_outline_blank),
               iconSize: 18.0,
             ),
-            title: Text(title),
+            title: Text(task.title),
           )
         ],
       ),
