@@ -1,5 +1,12 @@
+import 'package:hive/hive.dart';
+
+part 'task_model.g.dart';
+
+@HiveType(typeId: 0)
 class TaskSimple {
+  @HiveField(0)
   String title;
+  @HiveField(1)
   bool done = false;
 
   TaskSimple(this.title);
@@ -10,8 +17,11 @@ class TaskSimple {
   set changeTitle(String title) => this.title = title;
 }
 
+@HiveType(typeId: 1)
 class Task extends TaskSimple {
+  @HiveField(2)
   String description;
+  @HiveField(3)
   bool list;
 
   Task(String title, this.description, {this.list = false}) : super(title);
