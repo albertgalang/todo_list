@@ -20,7 +20,7 @@ class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
+      height: 600,
       child: TextField(
         controller: _controller,
         autofocus: true,

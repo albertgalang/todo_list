@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_list/models/task_model.dart';
-import 'package:todo_list/widgets/add_task.dart';
-import 'package:todo_list/widgets/app_bar.dart';
+// import 'package:todo_list/widgets/add_task.dart';
+// import 'package:todo_list/widgets/app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,9 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (snapshot.hasError)
               return Text(snapshot.error.toString());
             else {
-              return Scaffold(
-                appBar: MainAppBar(),
-                body: Container(
+              return Container(
                   child: StreamBuilder(
                     stream: Hive.box('tasks').watch(),
                     builder: (context, snapshot) {
@@ -43,17 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                     },
                   ),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AddTask();
-                        });
-                  },
-                ),
               );
             }
           } else
