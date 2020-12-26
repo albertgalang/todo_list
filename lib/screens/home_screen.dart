@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_list/models/task_model.dart';
+import 'package:todo_list/widgets/edit_task.dart';
 // import 'package:todo_list/widgets/add_task.dart';
 // import 'package:todo_list/widgets/app_bar.dart';
 
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemBuilder: (context, index) {
                               return TaskCard(Hive.box('tasks').getAt(index), index);
                             },
-                            separatorBuilder: (context, index) => Divider()
+                            separatorBuilder: (context, index) => Divider(),
                             );
                       }
                       return ListView.separated(
@@ -71,6 +72,11 @@ class TaskCard extends StatelessWidget {
                 Hive.box('tasks').deleteAt(index);
               }, // on pressed action
             ),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) => EditTask(taskIndex: index));
+            },
             title: Text(task.title),
           )
         ],
